@@ -25,11 +25,13 @@ void NormalBullet::Progress(Transform & _tTransPos)
 
 void NormalBullet::Render(HDC _hdc)
 {
+	/*
 	Ellipse(_hdc,
 		int(m_pObject->GetPosition().fX - (m_pObject->GetScale().fX / 2)),
 		int(m_pObject->GetPosition().fY - (m_pObject->GetScale().fY / 2)),
 		int(m_pObject->GetPosition().fX + (m_pObject->GetScale().fX / 2)),
 		int(m_pObject->GetPosition().fY + (m_pObject->GetScale().fY / 2)));
+	*/
 }
 
 void NormalBullet::Release(void)

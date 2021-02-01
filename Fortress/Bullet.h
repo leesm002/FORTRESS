@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "BitmapManager.h"
 
 class Bridge;
 class Bullet : public Object
