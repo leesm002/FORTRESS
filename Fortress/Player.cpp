@@ -25,13 +25,14 @@ Player::~Player()
 void Player::Initialize(void)
 {
 	isLeft = true;
-
+	isCharging = false;
+	iframe = 22;
 	m_ptMouse = { 0, 0 };
 	m_tTransPos.Position = Vector3(WINSIZEX / 2, WINSIZEY - PLAYER_RADIUS);
 	m_tTransPos.Rotation = Vector3(0.f, 0.f, 0.f);
 	m_tTransPos.Scale = Vector3(PLAYER_SCALE, PLAYER_SCALE);
 
-	m_tFrame = Frame(0, 0, 22, 0, 150);
+	m_tFrame = Frame(0, 0, iframe, 0, 150);
 
 	/*
 	Frame(int _StartFrame, 출력을 시작할 이미지 시작점.
@@ -60,6 +61,7 @@ void Player::Initialize(void)
 	m_fSpeed = 10.f;
 	m_strKey = "Player";
 	m_bMove = false;
+	
 
 	//** 출력 프레임을 제어할 시간.
 	m_dwFrameTime = GetTickCount64();
@@ -68,6 +70,18 @@ void Player::Initialize(void)
 
 	m_pImageList->insert(make_pair("PlayerStandL", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Player/StandL.bmp")));
 	m_pImageList->insert(make_pair("PlayerStandR", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Player/StandR.bmp")));
+
+	m_pImageList->insert(make_pair("PlayerChargingL", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Player/ChargingL.bmp")));
+	m_pImageList->insert(make_pair("PlayerChargingR", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Player/ChargingR.bmp")));
+
+	m_pImageList->insert(make_pair("PlayerDamagedL", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Player/DamagedL.bmp")));
+	m_pImageList->insert(make_pair("PlayerDamagedR", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Player/DamagedR.bmp")));
+
+	m_pImageList->insert(make_pair("PlayerLaunchedL", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Player/LaunchedL.bmp")));
+	m_pImageList->insert(make_pair("PlayerLaunchedR", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Player/LaunchedR.bmp")));
+
+	m_pImageList->insert(make_pair("PlayerVictoryL", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Player/VictoryL.bmp")));
+	m_pImageList->insert(make_pair("PlayerVictoryR", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Player/VictoryR.bmp")));
 
 }
 
@@ -79,13 +93,22 @@ int Player::Progress(void)
 	m_LinePoint.fX = m_tTransPos.Position.fX + cosf(m_fAngle * PI / 180) * 100;
 	m_LinePoint.fY = m_tTransPos.Position.fY + -sinf(m_fAngle * PI / 180) * 100;
 
+	if (isLeft && !isCharging)
+		iframe = 22;
+	else if (!isLeft && !isCharging)
+		iframe = 22;
+	else if (isLeft && isCharging)
+		iframe = 2;
+	else if (!isLeft && isCharging)
+		iframe = 2;
+
 	//** 출력 프레임을 제어할 시간에 프레임과 프레임 간격의 시간을 더한값보다 현재 시가니 더 크다면
 	if (m_dwFrameTime + m_tFrame.FrameTime < GetTickCount64())
 	{
 		m_dwFrameTime = GetTickCount64();
 
 		//** 현재 프레임 카운트가 마지막 이미지 프레임보다 큰지 확인한다.
-		if (m_tFrame.Count > m_tFrame.LastFrame)
+		if (m_tFrame.Count >= iframe)
 		{
 			//** 크다면 다시 초기 이미지 값으로 되돌려 출력하게 한다.
 			m_tFrame.Count = m_tFrame.StartFrame;
@@ -100,7 +123,7 @@ int Player::Progress(void)
 void Player::Render(HDC _hdc)
 {
 	
-	if (isLeft)
+	if (isLeft && !isCharging)
 	{
 		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
 			m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
@@ -114,7 +137,7 @@ void Player::Render(HDC _hdc)
 			PLAYER_SCALE,			// 출력할 이미지의 크기 만큼 Y
 			RGB(255, 0, 255));		// 해당 색상을 제외
 	}
-	else if (!isLeft)
+	else if (!isLeft && !isCharging)
 	{
 		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
 			m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
@@ -122,6 +145,34 @@ void Player::Render(HDC _hdc)
 			PLAYER_SCALE,	// 복사할 영역 끝부분 X
 			PLAYER_SCALE, 	// 복사할 영역 끝부분 Y
 			(*m_pImageList)["PlayerStandR"]->GetMemDC(),	// 복사할 이미지 (복사대상)
+			PLAYER_SCALE * m_tFrame.Count,  // 복사할 시작점 X
+			0,	// 복사할 시작점 Y
+			PLAYER_SCALE, 			// 출력할 이미지의 크기 만큼 X
+			PLAYER_SCALE,			// 출력할 이미지의 크기 만큼 Y
+			RGB(255, 0, 255));		// 해당 색상을 제외
+	}
+	else if (isLeft && isCharging)
+	{
+		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
+			m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
+			m_tTransPos.Position.fY - PLAYER_RADIUS, 	// 복사할 영역 시작점 Y
+			PLAYER_SCALE,	// 복사할 영역 끝부분 X
+			PLAYER_SCALE, 	// 복사할 영역 끝부분 Y
+			(*m_pImageList)["PlayerChargingL"]->GetMemDC(),	// 복사할 이미지 (복사대상)
+			PLAYER_SCALE * m_tFrame.Count,  // 복사할 시작점 X
+			0,	// 복사할 시작점 Y
+			PLAYER_SCALE, 			// 출력할 이미지의 크기 만큼 X
+			PLAYER_SCALE,			// 출력할 이미지의 크기 만큼 Y
+			RGB(255, 0, 255));		// 해당 색상을 제외
+	}
+	else if (!isLeft && isCharging)
+	{
+		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
+			m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
+			m_tTransPos.Position.fY - PLAYER_RADIUS, 	// 복사할 영역 시작점 Y
+			PLAYER_SCALE,	// 복사할 영역 끝부분 X
+			PLAYER_SCALE, 	// 복사할 영역 끝부분 Y
+			(*m_pImageList)["PlayerChargingR"]->GetMemDC(),	// 복사할 이미지 (복사대상)
 			PLAYER_SCALE * m_tFrame.Count,  // 복사할 시작점 X
 			0,	// 복사할 시작점 Y
 			PLAYER_SCALE, 			// 출력할 이미지의 크기 만큼 X
@@ -175,10 +226,14 @@ void Player::CheckKey()
 
 	if (KEY_SPACE & dwKey)
 	{
+		isCharging = true;
+
 		Object* pObj = CreateBullet<NormalBullet>();
 
 		ObjectManager::GetInstance()->AddObject(pObj->GetKey(), pObj);
 	}
+	else
+		isCharging = false;
 
 	if (KEY_RBUTTON & dwKey)
 	{

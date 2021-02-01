@@ -13,6 +13,8 @@ private:
 	POINT m_ptMouse;
 	bool m_bMove;
 	bool isLeft;	//왼쪽보고있을때 true 오른쪽보고있을때 false
+	bool isCharging;
+	int iframe;
 
 	//** 점프 
 	float m_fOldY;
