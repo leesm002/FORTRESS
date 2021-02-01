@@ -1,0 +1,5 @@
+Charging 		4
+Damaged 	1
+Launched	7	
+Stand		24
+Victory		50
