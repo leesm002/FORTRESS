@@ -25,8 +25,12 @@ Player::~Player()
 void Player::Initialize(void)
 {
 	isLeft = true;
+	isShoot = false;
 	isCharging = false;
+
 	iframe = 22;
+	chargingCount = 0;
+
 	m_ptMouse = { 0, 0 };
 	m_tTransPos.Position = Vector3(WINSIZEX / 2, WINSIZEY - PLAYER_RADIUS);
 	m_tTransPos.Rotation = Vector3(0.f, 0.f, 0.f);
@@ -56,7 +60,6 @@ void Player::Initialize(void)
 	m_TargetPoint = Vector3(0.f, 0.f, 0.f);
 	m_Direction = Vector3(0.f, 0.f, 0.f);
 
-	m_fTime = 0.f;
 	m_fAngle = 0.f;
 	m_fSpeed = 10.f;
 	m_strKey = "Player";
@@ -93,14 +96,29 @@ int Player::Progress(void)
 	m_LinePoint.fX = m_tTransPos.Position.fX + cosf(m_fAngle * PI / 180) * 100;
 	m_LinePoint.fY = m_tTransPos.Position.fY + -sinf(m_fAngle * PI / 180) * 100;
 
-	if (isLeft && !isCharging)
+	if (isLeft && !isCharging && !isShoot)
 		iframe = 22;
-	else if (!isLeft && !isCharging)
+	else if (!isLeft && !isCharging && !isShoot)
 		iframe = 22;
-	else if (isLeft && isCharging)
-		iframe = 2;
-	else if (!isLeft && isCharging)
-		iframe = 2;
+	else if (isLeft && isCharging && !isShoot)
+		iframe = 3;
+	else if (!isLeft && isCharging && !isShoot)
+		iframe = 3;
+	else if (isLeft && isShoot)
+		iframe = 6;
+	else if (!isLeft && isShoot)
+		iframe = 6;
+	
+	if (isShoot)
+	{
+		if (m_tFrame.Count >= iframe)
+		{
+			isShoot = false;
+
+			return 0;
+		}
+
+	}
 
 	//** 출력 프레임을 제어할 시간에 프레임과 프레임 간격의 시간을 더한값보다 현재 시가니 더 크다면
 	if (m_dwFrameTime + m_tFrame.FrameTime < GetTickCount64())
@@ -123,7 +141,7 @@ int Player::Progress(void)
 void Player::Render(HDC _hdc)
 {
 	
-	if (isLeft && !isCharging)
+	if (isLeft && !isCharging && !isShoot)
 	{
 		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
 			m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
@@ -137,7 +155,7 @@ void Player::Render(HDC _hdc)
 			PLAYER_SCALE,			// 출력할 이미지의 크기 만큼 Y
 			RGB(255, 0, 255));		// 해당 색상을 제외
 	}
-	else if (!isLeft && !isCharging)
+	else if (!isLeft && !isCharging && !isShoot)
 	{
 		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
 			m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
@@ -151,7 +169,7 @@ void Player::Render(HDC _hdc)
 			PLAYER_SCALE,			// 출력할 이미지의 크기 만큼 Y
 			RGB(255, 0, 255));		// 해당 색상을 제외
 	}
-	else if (isLeft && isCharging)
+	else if (isLeft && isCharging && !isShoot)
 	{
 		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
 			m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
@@ -165,7 +183,7 @@ void Player::Render(HDC _hdc)
 			PLAYER_SCALE,			// 출력할 이미지의 크기 만큼 Y
 			RGB(255, 0, 255));		// 해당 색상을 제외
 	}
-	else if (!isLeft && isCharging)
+	else if (!isLeft && isCharging && !isShoot)
 	{
 		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
 			m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
@@ -179,7 +197,38 @@ void Player::Render(HDC _hdc)
 			PLAYER_SCALE,			// 출력할 이미지의 크기 만큼 Y
 			RGB(255, 0, 255));		// 해당 색상을 제외
 	}
+	else if (isLeft && isShoot)
+	{
+		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
+			m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
+			m_tTransPos.Position.fY - PLAYER_RADIUS, 	// 복사할 영역 시작점 Y
+			PLAYER_SCALE,	// 복사할 영역 끝부분 X
+			PLAYER_SCALE, 	// 복사할 영역 끝부분 Y
+			(*m_pImageList)["PlayerLaunchedL"]->GetMemDC(),	// 복사할 이미지 (복사대상)
+			PLAYER_SCALE * m_tFrame.Count,  // 복사할 시작점 X
+			0,	// 복사할 시작점 Y
+			PLAYER_SCALE, 			// 출력할 이미지의 크기 만큼 X
+			PLAYER_SCALE,			// 출력할 이미지의 크기 만큼 Y
+			RGB(255, 0, 255));		// 해당 색상을 제외
+
+
+	}
+	else if (!isLeft && isShoot)
+	{
+		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
+			m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
+			m_tTransPos.Position.fY - PLAYER_RADIUS, 	// 복사할 영역 시작점 Y
+			PLAYER_SCALE,	// 복사할 영역 끝부분 X
+			PLAYER_SCALE, 	// 복사할 영역 끝부분 Y
+			(*m_pImageList)["PlayerLaunchedR"]->GetMemDC(),	// 복사할 이미지 (복사대상)
+			PLAYER_SCALE * m_tFrame.Count,  // 복사할 시작점 X
+			0,	// 복사할 시작점 Y
+			PLAYER_SCALE, 			// 출력할 이미지의 크기 만큼 X
+			PLAYER_SCALE,			// 출력할 이미지의 크기 만큼 Y
+			RGB(255, 0, 255));		// 해당 색상을 제외
+	}
 	
+	ObjectManager::GetInstance()->Render(_hdc);
 }
 
 void Player::Release(void)
@@ -227,13 +276,23 @@ void Player::CheckKey()
 	if (KEY_SPACE & dwKey)
 	{
 		isCharging = true;
-
-		Object* pObj = CreateBullet<NormalBullet>();
-
-		ObjectManager::GetInstance()->AddObject(pObj->GetKey(), pObj);
+		m_fAngle++;
 	}
 	else
-		isCharging = false;
+	{
+		if (isCharging)
+		{
+			Object* pObj = CreateBullet<NormalBullet>();
+			pObj->SetAngle(m_fAngle);
+
+			ObjectManager::GetInstance()->AddObject(pObj->GetKey(), pObj);
+
+			isShoot = true;
+			isCharging = false;
+			m_fAngle = 0;
+
+		}
+	}
 
 	if (KEY_RBUTTON & dwKey)
 	{

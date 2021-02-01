@@ -48,7 +48,6 @@ void Stage::Render(HDC _hdc)
 {
 	ObjectManager::GetInstance()->Render(m_pBackBuffer->GetMemDC());
 
-
 	BitBlt(m_pBackBuffer->GetMemDC(),	//** 그림을 그려 넣을곳
 		0,	//** 이미지가 출력될 시작점 X
 		0,	//** 이미지가 출력될 시작점 Y
