@@ -14,13 +14,17 @@ NormalBullet::~NormalBullet()
 
 void NormalBullet::Initialize(void)
 {
-	m_fSpeed = 15.f;
+	m_fSpeed = m_fAngle * 0.2f;
+	ftime = 0.05f;
 }
 
 void NormalBullet::Progress(Transform & _tTransPos)
 {
+	
 	_tTransPos.Position.fX += cosf(m_fAngle *  PI / 180) * m_fSpeed;
-	_tTransPos.Position.fY += -sinf(m_fAngle *  PI / 180) * m_fSpeed;
+	_tTransPos.Position.fY += -(sinf(m_fAngle * PI / 180) * m_fSpeed) + (9.8f * ftime);
+
+	ftime += 0.005f;
 }
 
 void NormalBullet::Render(HDC _hdc)
@@ -36,5 +40,5 @@ void NormalBullet::Render(HDC _hdc)
 
 void NormalBullet::Release(void)
 {
-
+	
 }

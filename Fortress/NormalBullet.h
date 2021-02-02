@@ -4,6 +4,9 @@
 class NormalBullet 
 	: public Bullet_Bridge
 {
+
+private:
+	float ftime;
 public:
 	virtual void Initialize(void);
 	virtual void Progress(Transform& _tTransPos);
