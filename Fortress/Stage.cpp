@@ -21,6 +21,7 @@ void Stage::Initialize(void)
 	iBG_fx = 0;
 
 	pPlayer->Initialize();
+	pMonster->Initialize();
 
 	m_pImageList = BitmapManager::GetInstance()->GetImageList();
 
@@ -37,7 +38,7 @@ int Stage::Progress(void)
 	ObjectManager::GetInstance()->Progress();
 
 	pPlayer->Progress();
-
+	pMonster->Progress();
 
 
 	return 0;
@@ -58,6 +59,7 @@ void Stage::Render(HDC _hdc)
 		SRCCOPY);	// 고속 복사
 
 	pPlayer->Render(m_pBackBuffer->GetMemDC());
+	pMonster->Render(m_pBackBuffer->GetMemDC());
 
 	BitBlt(_hdc,	//** 그림을 그려 넣을곳
 		0,	//** 이미지가 출력될 시작점 X

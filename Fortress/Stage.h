@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "ObjectFactory.h"
 #include "Player.h"
+#include "Monster.h"
 
 class Stage : public Scene
 {
@@ -10,7 +11,8 @@ private:
 	int iBG_fx;	
 
 protected:
-	Object* pPlayer = ObjectFactory<Player>::CreateObject(WINSIZEX / 2, WINSIZEY - PLAYER_RADIUS);
+	Object* pPlayer = ObjectFactory<Player>::CreateObject(WINSIZEX / 4, WINSIZEY - PLAYER_RADIUS);
+	Object* pMonster = ObjectFactory<Monster>::CreateObject((WINSIZEX * 3) / 4, WINSIZEY - PLAYER_RADIUS);
 public:
 	virtual void Initialize(void)override;
 	virtual int Progress(void)override;
