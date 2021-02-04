@@ -16,7 +16,7 @@ void Bullet::Initialize(void)
 {
 	m_tTransPos.Position = Vector3(0.f, 0.f);
 	m_tTransPos.Rotation = Vector3(0.f, 0.f, 0.f);
-	m_tTransPos.Scale = Vector3(30.f, 30.f);
+	m_tTransPos.Scale = Vector3(24.f, 42.f);
 
 	m_strKey = "Bullet";
 
@@ -39,11 +39,12 @@ int Bullet::Progress(void)
 
 void Bullet::Render(HDC _hdc)
 {
+	
 	TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
-		m_tTransPos.Position.fX - PLAYER_RADIUS,	// 복사할 영역 시작점 X
-		m_tTransPos.Position.fY - (PLAYER_RADIUS / 4), 	// 복사할 영역 시작점 Y
-		24,	// 복사할 영역 끝부분 X
-		42, 	// 복사할 영역 끝부분 Y
+		m_tTransPos.Position.fX,	// 복사할 영역 시작점 X
+		m_tTransPos.Position.fY, 	// 복사할 영역 시작점 Y
+		m_tTransPos.Scale.fX,	// 복사할 영역 끝부분 X
+		m_tTransPos.Scale.fY, 	// 복사할 영역 끝부분 Y
 		(*m_pImageList)["Bullet"]->GetMemDC(),	// 복사할 이미지 (복사대상)
 		0,  // 복사할 시작점 X
 		0,	// 복사할 시작점 Y

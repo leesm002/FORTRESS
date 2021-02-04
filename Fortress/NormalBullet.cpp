@@ -14,15 +14,29 @@ NormalBullet::~NormalBullet()
 
 void NormalBullet::Initialize(void)
 {
-	m_fSpeed = m_fAngle * 0.2f;
+	if (m_fAngle <= 90.0f)
+	{
+		m_fSpeed = m_fAngle * 0.2f;
+	}
+	if (m_fAngle > 90.0f)
+	{
+		m_fSpeed = (180.0f - m_fAngle) * 0.2f;
+	}
 	ftime = 0.05f;
 }
 
 void NormalBullet::Progress(Transform & _tTransPos)
 {
-	
-	_tTransPos.Position.fX += cosf(m_fAngle *  PI / 180) * m_fSpeed;
-	_tTransPos.Position.fY += -(sinf(m_fAngle * PI / 180) * m_fSpeed) + (9.8f * ftime);
+	if (m_fAngle <= 90.0f)
+	{
+		_tTransPos.Position.fX += cosf(m_fAngle * PI / 180) * m_fSpeed;
+		_tTransPos.Position.fY += -(sinf(m_fAngle * PI / 180) * m_fSpeed) + (9.8f * ftime);
+	}
+	if (m_fAngle > 90.0f)
+	{
+		_tTransPos.Position.fX += cosf(m_fAngle * PI / 180) * m_fSpeed;
+		_tTransPos.Position.fY += -(sinf(m_fAngle * PI / 180) * m_fSpeed) + (9.8f * ftime);
+	}
 
 	ftime += 0.005f;
 }

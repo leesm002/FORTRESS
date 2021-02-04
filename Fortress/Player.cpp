@@ -266,30 +266,55 @@ void Player::CheckKey()
 	{
 		m_tTransPos.Position.fX -= m_fSpeed;
 		isLeft = true;
+		m_fAngle = 180.0f;
 	}
 	if (KEY_RIGHT & dwKey)
 	{
 		m_tTransPos.Position.fX += m_fSpeed;
 		isLeft = false;
+		m_fAngle = 0.0f;
 	}
 
 	if (KEY_SPACE & dwKey)
 	{
 		isCharging = true;
-		m_fAngle++;
+		
+		if (isLeft)
+		{
+			if (m_fAngle > 90.0f)
+			{
+				m_fAngle -= 0.5f;
+			}
+		}
+
+		if (!isLeft)
+		{
+			if (m_fAngle < 90.0f)
+			{
+				m_fAngle += 0.5f;
+			}
+		}
+		
 	}
 	else
 	{
 		if (isCharging)
 		{
 			Object* pObj = CreateBullet<NormalBullet>();
-			pObj->SetAngle(m_fAngle);
 
 			ObjectManager::GetInstance()->AddObject(pObj->GetKey(), pObj);
 
 			isShoot = true;
 			isCharging = false;
-			m_fAngle = 0;
+
+			if (isLeft)
+			{
+				m_fAngle = 180.0f;
+			}
+			if (!isLeft)
+			{
+				m_fAngle = 0;
+			}
 
 		}
 	}
@@ -329,7 +354,7 @@ Object* Player::CreateBullet()
 
 	((Bullet_Bridge*)Bridge)->SetAngle(m_fAngle);
 
-	Object* pBullet = ObjectFactory<Bullet>::CreateObject(m_LinePoint.fX, m_LinePoint.fY, Bridge);
+	Object* pBullet = ObjectFactory<Bullet>::CreateObject(m_tTransPos.Position.fX, m_tTransPos.Position.fY - BULLET_SCALE_Y, Bridge);
 
 	return pBullet;
 }

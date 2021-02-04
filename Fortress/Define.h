@@ -3,8 +3,12 @@
 #define WINSIZEX  1920
 #define WINSIZEY  1080
 
-#define PLAYER_SCALE 256
+#define PLAYER_SCALE 256.0f
 #define PLAYER_RADIUS (PLAYER_SCALE / 2)
+
+#define BULLET_SCALE_X 24
+#define BULLET_SCALE_Y 42
+
 
 #define PI 3.141592f
 
