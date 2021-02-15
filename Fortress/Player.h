@@ -15,6 +15,7 @@ private:
 	bool isLeft;	//왼쪽보고있을때 true 오른쪽보고있을때 false
 	bool isCharging;
 	bool isShoot;
+	bool isExistGround;
 	int iframe;
 
 	//** 점프 

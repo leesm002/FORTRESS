@@ -103,6 +103,9 @@
     <Filter Include="소스 파일\99. Manager\SoundManager">
       <UniqueIdentifier>{703bbee4-9136-448b-88d1-49a67fa96843}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01. Object\Stage\Ground">
+      <UniqueIdentifier>{5141a3ca-14b2-4ff7-998f-d27d4afe74fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainUpdate.h">
@@ -204,6 +207,9 @@
     <ClInclude Include="ObjectFactory.h">
       <Filter>소스 파일\99. Manager\ObjectManager\ObjectFactory</Filter>
     </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>소스 파일\01. Object\Stage\Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Fortress.cpp">
@@ -271,6 +277,9 @@
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>소스 파일\99. Manager\SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>소스 파일\01. Object\Stage\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

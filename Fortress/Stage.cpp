@@ -22,13 +22,14 @@ void Stage::Initialize(void)
 
 	pPlayer->Initialize();
 	pMonster->Initialize();
+	pGround->Initialize();
 
 	m_pImageList = BitmapManager::GetInstance()->GetImageList();
 
 	m_pImageList->insert(make_pair("BackBuffer", m_pBackBuffer));
 
 	m_pImageList->insert(make_pair("BackGround_Stage", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/StageBG.bmp")));
-		
+
 	Object::SetImageList(m_pImageList);
 
 }
@@ -39,7 +40,7 @@ int Stage::Progress(void)
 
 	pPlayer->Progress();
 	pMonster->Progress();
-
+	pGround->Progress();
 
 	return 0;
 }
@@ -58,6 +59,7 @@ void Stage::Render(HDC _hdc)
 		0, 0,
 		SRCCOPY);	// 고속 복사
 
+	pGround->Render(m_pBackBuffer->GetMemDC());
 	pPlayer->Render(m_pBackBuffer->GetMemDC());
 	pMonster->Render(m_pBackBuffer->GetMemDC());
 
@@ -69,6 +71,7 @@ void Stage::Render(HDC _hdc)
 		m_pBackBuffer->GetMemDC(),	//** 복사할 이미지
 		0, 0,
 		SRCCOPY);	// 고속 복사
+
 
 }
 

@@ -27,6 +27,7 @@ void Player::Initialize(void)
 	isLeft = true;
 	isShoot = false;
 	isCharging = false;
+	isExistGround = false;
 
 	iframe = 22;
 	chargingCount = 0;
@@ -38,30 +39,11 @@ void Player::Initialize(void)
 
 	m_tFrame = Frame(0, 0, iframe, 0, 150);
 
-	/*
-	Frame(int _StartFrame, 출력을 시작할 이미지 시작점.
-	int _Count,				시작점부터 끝지점까지 순차적으로 출력지점을 이동시켜줌
-	int _LastFrame,			출력할 이미지의 마지막 지점
-	int _SceneFrame,		점프, 이동, 공경 등의 장면을 변경 시킴
-	DWORD _FrameTime)		
-	
-	DWORD _FrameTime = 	장면마다 출력해야할 이미지 개수가 다르다.
-		수량에 비례하여 출력되기 때문에
-		애니매이션이 끝나는 지점을 맞춰주기 위함.
-
-		몬스터의 공격프 이미지가 5장이고 
-		플레이어의 공격 이미지가 10 장이라 한다면 
-		우리가 출력하는 이미지는 매 프레임마다 1장의 이미지가 출력되기 때문에 
-		몬스터가 2번의 공격을 할때 플레이어는 한번의 공격을 하게된다. 
-
-		이런 문제를 해결하기위해 이미지 전체가 출력되는 시간을 정해놓고 출력해야 한다. (초당 공격력으로 환산된다.)
-	*/
-	
 	m_TargetPoint = Vector3(0.f, 0.f, 0.f);
 	m_Direction = Vector3(0.f, 0.f, 0.f);
 
 	m_fAngle = 0.f;
-	m_fSpeed = 10.f;
+	m_fSpeed = 5.f;
 	m_strKey = "Player";
 	m_bMove = false;
 	
@@ -90,7 +72,7 @@ void Player::Initialize(void)
 
 int Player::Progress(void)
 {
-	
+
 	CheckKey();
 
 	m_LinePoint.fX = m_tTransPos.Position.fX + cosf(m_fAngle * PI / 180) * 100;
@@ -319,6 +301,7 @@ void Player::CheckKey()
 		}
 	}
 
+	/*
 	if (KEY_RBUTTON & dwKey)
 	{
 		//** 마우스 우클릭 이벤트가 발생하면 플레이어를 움직이게 하기 위함.
@@ -344,8 +327,8 @@ void Player::CheckKey()
 		GetCursorPos(&m_ptMouse);
 		ScreenToClient(g_hWnd, &m_ptMouse);
 	}
+	*/
 }
-
 
 template <typename T>
 Object* Player::CreateBullet()

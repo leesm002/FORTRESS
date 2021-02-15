@@ -12,6 +12,7 @@ public:
 	virtual void Progress(Transform& _tTransPos);
 	virtual void Render(HDC _hdc);
 	virtual void Release(void);
+
 public:
 	NormalBullet();
 	virtual ~NormalBullet();

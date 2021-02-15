@@ -14,8 +14,6 @@ Bullet::~Bullet()
 
 void Bullet::Initialize(void)
 {
-	m_tTransPos.Position = Vector3(0.f, 0.f);
-	m_tTransPos.Rotation = Vector3(0.f, 0.f, 0.f);
 	m_tTransPos.Scale = Vector3(24.f, 42.f);
 
 	m_strKey = "Bullet";
@@ -48,8 +46,8 @@ void Bullet::Render(HDC _hdc)
 		(*m_pImageList)["Bullet"]->GetMemDC(),	// 복사할 이미지 (복사대상)
 		0,  // 복사할 시작점 X
 		0,	// 복사할 시작점 Y
-		48, 			// 출력할 이미지의 크기 만큼 X
-		84,			// 출력할 이미지의 크기 만큼 Y
+		BULLET_SCALE_X, 			// 출력할 이미지의 크기 만큼 X
+		BULLET_SCALE_Y,			// 출력할 이미지의 크기 만큼 Y
 		RGB(255, 0, 255));		// 해당 색상을 제외
 
 	if (m_pBridge)

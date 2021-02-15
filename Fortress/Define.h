@@ -6,16 +6,17 @@
 #define PLAYER_SCALE 256.0f
 #define PLAYER_RADIUS (PLAYER_SCALE / 2)
 
-#define BULLET_SCALE_X 24
-#define BULLET_SCALE_Y 42
+#define GROUND_WIDTH 512
+#define GROUND_HEIGHT 256
+
+#define BULLET_SCALE_X 48
+#define BULLET_SCALE_Y 84
 
 
 #define PI 3.141592f
 
 
 extern HWND g_hWnd;
-
-
 
 
 const DWORD KEY_UP				= 0x00001;			// 00000001

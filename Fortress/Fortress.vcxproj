@@ -154,6 +154,7 @@
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Fortress.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Logo.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Fortress.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="LogoObject.cpp" />
