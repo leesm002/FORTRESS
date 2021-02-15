@@ -7,9 +7,9 @@ protected:
 	float m_fSpeed;
 	float m_fAngle;
 public:
-	virtual void Initialize(void)PURE;
+	virtual void Initialize(Transform& _tTransPos)PURE;
 	virtual void Progress(Transform& _tTransPos)PURE;
-	virtual void Render(HDC _hdc)PURE;
+	virtual void Render(HDC _hdc, Transform& _tTransPos)PURE;
 	virtual void Release(void)PURE;
 
 public:

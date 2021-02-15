@@ -49,28 +49,28 @@ int Stage::Progress(void)
 void Stage::Render(HDC _hdc)
 {
 	ObjectManager::GetInstance()->Render(m_pBackBuffer->GetMemDC());
-
-	BitBlt(m_pBackBuffer->GetMemDC(),	//** 그림을 그려 넣을곳
-		0,	//** 이미지가 출력될 시작점 X
-		0,	//** 이미지가 출력될 시작점 Y
+	
+	BitBlt(m_pBackBuffer->GetMemDC(),
+		0,	
+		0,	
 		WINSIZEX, 
-		WINSIZEY,				//** 복사할 이미지의 크기만큼 복사
-		(*m_pImageList)["BackGround_Stage"]->GetMemDC(),	//** 복사할 이미지
+		WINSIZEY,				
+		(*m_pImageList)["BackGround_Stage"]->GetMemDC(),	
 		0, 0,
-		SRCCOPY);	// 고속 복사
+		SRCCOPY);	
 
 	pGround->Render(m_pBackBuffer->GetMemDC());
 	pPlayer->Render(m_pBackBuffer->GetMemDC());
 	pMonster->Render(m_pBackBuffer->GetMemDC());
 
-	BitBlt(_hdc,	//** 그림을 그려 넣을곳
-		0,	//** 이미지가 출력될 시작점 X
-		0,	//** 이미지가 출력될 시작점 Y
+	BitBlt(_hdc,	
+		0,	
+		0,	
 		WINSIZEX,
-		WINSIZEY,				//** 복사할 이미지의 크기만큼 복사
-		m_pBackBuffer->GetMemDC(),	//** 복사할 이미지
+		WINSIZEY,			
+		m_pBackBuffer->GetMemDC(),
 		0, 0,
-		SRCCOPY);	// 고속 복사
+		SRCCOPY);	
 
 
 }

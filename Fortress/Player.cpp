@@ -32,7 +32,6 @@ void Player::Initialize(void)
 	iframe = 22;
 	chargingCount = 0;
 
-	m_ptMouse = { 0, 0 };
 	m_tTransPos.Position = Vector3(WINSIZEX / 2, WINSIZEY - PLAYER_RADIUS);
 	m_tTransPos.Rotation = Vector3(0.f, 0.f, 0.f);
 	m_tTransPos.Scale = Vector3(PLAYER_SCALE, PLAYER_SCALE);
@@ -72,6 +71,11 @@ void Player::Initialize(void)
 
 int Player::Progress(void)
 {
+
+	m_rc = {(long)m_tTransPos.Position.fX - 20,
+			(long)m_tTransPos.Position.fY - 2,
+			(long)m_tTransPos.Position.fX + 20,
+			(long)m_tTransPos.Position.fY + 2};
 
 	CheckKey();
 
@@ -122,7 +126,9 @@ int Player::Progress(void)
 
 void Player::Render(HDC _hdc)
 {
-	
+	if (isDebugMode)
+		Rectangle(_hdc, m_rc.left, m_rc.top, m_rc.right, m_rc.bottom);
+
 	if (isLeft && !isCharging && !isShoot)
 	{
 		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
@@ -221,6 +227,11 @@ void Player::Release(void)
 void Player::CheckKey()
 {
 	DWORD dwKey = InputManager::GetInstance()->GetKey();
+
+	if (KEY_TAB & dwKey)
+		isDebugMode = true;
+	else
+		isDebugMode = false;
 
 	if (KEY_UP & dwKey)
 	{

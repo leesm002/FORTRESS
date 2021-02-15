@@ -1,15 +1,16 @@
 #pragma once
 #include "Include.h"
 #include "Bitmap.h"
+#include "InputManager.h"
 
 class Object
 {
 protected:
 	Transform m_tTransPos;
 	Frame m_tFrame;
-
+	RECT m_rc;
 	string m_strKey;
-
+	bool isDebugMode = false;
 	float m_fSpeed;
 	float m_fAngle;
 
@@ -37,6 +38,8 @@ public:
 
 	Vector3 GetScale() const { return m_tTransPos.Scale; }
 	void SetScale(float _fx, float _fy) { m_tTransPos.Scale.fX = _fx; m_tTransPos.Scale.fY = _fy; }
+
+	Transform* GetTransPos() { return &m_tTransPos; }
 
 public:
 	Object();

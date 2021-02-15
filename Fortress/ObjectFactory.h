@@ -43,7 +43,7 @@ public:
 		pObj->SetPosition(_fx, _fy);
 
 
-		_pBridge->Initialize();
+		_pBridge->Initialize(*(pObj->GetTransPos()));
 		_pBridge->SetObject(pObj);
 
 

@@ -3,8 +3,10 @@
 #define WINSIZEX  1920
 #define WINSIZEY  1080
 
-#define PLAYER_SCALE 256.0f
+#define PLAYER_SCALE 256
+#define PLAYER_SCALEF 256.0f
 #define PLAYER_RADIUS (PLAYER_SCALE / 2)
+#define PLAYER_RADIUSF (PLAYER_SCALEF / 2)
 
 #define GROUND_WIDTH 512
 #define GROUND_HEIGHT 256
@@ -29,7 +31,8 @@ const DWORD KEY_MENU		= 0x00040;			// 01000000
 
 const DWORD KEY_RBUTTON = 0x00080;			// 마우스 우클릭
 const DWORD KEY_LBUTTON = 0x00100;			// 마우스 좌클릭
-const DWORD KEY_ESCAPE = 0x00200;			// 마우스 좌클릭
+const DWORD KEY_ESCAPE = 0x00200;			// 엔터키
+const DWORD KEY_TAB = 0x00400;				// 탭키
 
 
 

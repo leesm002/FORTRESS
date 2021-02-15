@@ -1,5 +1,6 @@
 #pragma once
 #include "Bullet_Bridge.h"
+#include "BitmapManager.h"
 
 class NormalBullet 
 	: public Bullet_Bridge
@@ -8,9 +9,9 @@ class NormalBullet
 private:
 	float ftime;
 public:
-	virtual void Initialize(void);
+	virtual void Initialize(Transform& _tTransPos);
 	virtual void Progress(Transform& _tTransPos);
-	virtual void Render(HDC _hdc);
+	virtual void Render(HDC _hdc, Transform& _tTransPos);
 	virtual void Release(void);
 
 public:

@@ -51,6 +51,10 @@ void InputManager::UpdateKey()
 	{
 		m_dwKey |= KEY_ESCAPE;
 	}
+	if (GetAsyncKeyState(VK_TAB))
+	{
+		m_dwKey |= KEY_TAB;
+	}
 }
 
 

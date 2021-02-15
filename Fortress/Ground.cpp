@@ -2,17 +2,31 @@
 
 void Ground::Initialize(void)
 {
+	m_rc = {(long)m_tTransPos.Position.fX - 50,
+			(long)m_tTransPos.Position.fY - 50,
+			(long)m_tTransPos.Position.fX + 50,
+			(long)m_tTransPos.Position.fY + 50};
 
     m_pImageList->insert(make_pair("Ground", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Ground/Ground.bmp")));
 }
 
 int Ground::Progress(void)
 {
+
+	DWORD dwKey = InputManager::GetInstance()->GetKey();
+
+	if (KEY_TAB & dwKey)
+		isDebugMode = true;
+	else
+		isDebugMode = false;
     return 0;
 }
 
 void Ground::Render(HDC _hdc)
 {
+	if (isDebugMode)
+		Rectangle(_hdc, m_rc.left, m_rc.top, m_rc.right, m_rc.bottom);
+
 	TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
 		0,	// 복사할 영역 시작점 X
 		0, 	// 복사할 영역 시작점 Y
