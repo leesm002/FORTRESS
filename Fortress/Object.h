@@ -21,7 +21,7 @@ protected:
 	static map<string, Bitmap*>* m_pImageList;
 
 public:
-	static void SetImageList(map<string, Bitmap*>* _ImageList) { m_pImageList = _ImageList; }
+	static void SetImageList(map<string, Bitmap*>* _pImageList) { m_pImageList = _pImageList; }
 public:
 	virtual void Initialize()PURE;
 	virtual int Progress()PURE;

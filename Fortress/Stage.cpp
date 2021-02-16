@@ -38,6 +38,7 @@ int Stage::Progress(void)
 	standingObject();
 	
 
+
 	return 0;
 }
 
@@ -45,6 +46,7 @@ int Stage::Progress(void)
 void Stage::Render(HDC _hdc)
 {
 	ObjectManager::GetInstance()->Render(m_pBackBuffer->GetMemDC());
+	
 	
 	BitBlt(m_pBackBuffer->GetMemDC(),
 		0,	
@@ -55,8 +57,8 @@ void Stage::Render(HDC _hdc)
 		0, 0,
 		SRCCOPY);	
 
-	pGround->Render(m_pBackBuffer->GetMemDC());
 	pPlayer->Render(m_pBackBuffer->GetMemDC());
+	pGround->Render(m_pBackBuffer->GetMemDC());
 	pMonster->Render(m_pBackBuffer->GetMemDC());
 
 	BitBlt(_hdc,	

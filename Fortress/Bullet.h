@@ -5,12 +5,12 @@
 #include "BitmapManager.h"
 #include "ObjectManager.h"
 
-
 class Bridge;
 class Bullet : public Object
 {
 private:
 	Bridge* m_pBridge;
+	bool bCheckBoom = false;
 public:
 	virtual void Initialize(void)override;
 	virtual int Progress(void)override;

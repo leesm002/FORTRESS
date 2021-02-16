@@ -1,6 +1,7 @@
 #include "NormalBullet.h"
 #include "Object.h"
 
+
 NormalBullet::NormalBullet()
 {
 
@@ -30,7 +31,7 @@ void NormalBullet::Initialize(Transform& _tTransPos)
 	ftime = 0.05f;
 }
 
-void NormalBullet::Progress(Transform & _tTransPos)
+bool NormalBullet::Progress(Transform & _tTransPos, RECT* _rc)
 {
 
 	if (!isBoom)
@@ -40,10 +41,17 @@ void NormalBullet::Progress(Transform & _tTransPos)
 
 		ftime += 0.005f;
 
+		if (CollisionManager::CollRect(_rc, pGround->GetRC()))
+		{
+			isBoom = true;
+			return true;
+		}
+
+		return false;
 	}
 	else
 	{
-
+		return true;
 	}
 	
 
@@ -69,9 +77,8 @@ void NormalBullet::Render(HDC _hdc, Transform& _tTransPos)
 	}
 	else
 	{
-		
 		Ellipse(
-			(*BitmapManager::GetInstance()->GetImageList())["Ground"]->GetMemDC(),
+			_hdc,
 			_tTransPos.Position.fX - 50,
 			_tTransPos.Position.fY - 50,
 			_tTransPos.Position.fX + 50,
