@@ -57,6 +57,8 @@ int Monster::Progress(void)
 			(long)m_tTransPos.Position.fX + 20,
 			(long)m_tTransPos.Position.fY + 2 };
 
+	DebugMode();
+
 	if (isLeft && !isCharging && !isShoot)
 		iframe = 22;
 	else if (!isLeft && !isCharging && !isShoot)
@@ -101,6 +103,9 @@ int Monster::Progress(void)
 
 void Monster::Render(HDC _hdc)
 {
+	if (isDebugMode)
+		Rectangle(_hdc, m_rc.left, m_rc.top, m_rc.right, m_rc.bottom);
+
 	if (isLeft && !isCharging && !isShoot)
 	{
 		TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!

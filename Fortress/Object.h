@@ -3,6 +3,7 @@
 #include "Bitmap.h"
 #include "InputManager.h"
 
+
 class Object
 {
 protected:
@@ -26,7 +27,15 @@ public:
 	virtual int Progress()PURE;
 	virtual void Render(HDC _hdc)PURE;
 	virtual void Release()PURE;
+	void DebugMode()
+	{
+		DWORD dwKey = InputManager::GetInstance()->GetKey();
 
+		if (KEY_TAB & dwKey)
+			isDebugMode = true;
+		else
+			isDebugMode = false;
+	}
 public:
 	string GetKey() const { return m_strKey; }
 	void SetKey(string _Key) { m_strKey = _Key; }
@@ -48,6 +57,8 @@ public:
 
 	bool GetIsMoved() { return isMoved; }
 	void SetIsMoved(bool _isMoved) { isMoved = _isMoved; }
+
+
 
 public:
 	Object();

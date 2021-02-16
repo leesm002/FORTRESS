@@ -1,9 +1,14 @@
 #pragma once
 #include "Scene.h"
 #include "ObjectFactory.h"
+#include "BackGround.h"
 #include "Player.h"
 #include "Monster.h"
 #include "Ground.h"
+#include "Bitmap.h"
+#include "BitmapManager.h"
+#include "ObjectManager.h"
+#include "CollisionManager.h"
 
 class Stage : public Scene
 {

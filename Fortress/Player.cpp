@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "Bullet.h"
 
-#include "InputManager.h"
 #include "ObjectManager.h"
 #include "ObjectFactory.h"
 
@@ -69,12 +68,12 @@ void Player::Initialize(void)
 
 int Player::Progress(void)
 {
-
-	m_rc = {(long)m_tTransPos.Position.fX - 20,
+	m_rc = { (long)m_tTransPos.Position.fX - 20,
 			(long)m_tTransPos.Position.fY - 2,
 			(long)m_tTransPos.Position.fX + 20,
-			(long)m_tTransPos.Position.fY + 2};
+			(long)m_tTransPos.Position.fY + 2 };
 
+	DebugMode();
 	CheckKey();
 
 	m_LinePoint.fX = m_tTransPos.Position.fX + cosf(m_fAngle * PI / 180) * 100;
@@ -226,11 +225,6 @@ void Player::CheckKey()
 {
 	DWORD dwKey = InputManager::GetInstance()->GetKey();
 
-	if (KEY_TAB & dwKey)
-		isDebugMode = true;
-	else
-		isDebugMode = false;
-
 	if (KEY_UP & dwKey)
 	{
 
@@ -310,33 +304,7 @@ void Player::CheckKey()
 		}
 	}
 
-	/*
-	if (KEY_RBUTTON & dwKey)
-	{
-		//** 마우스 우클릭 이벤트가 발생하면 플레이어를 움직이게 하기 위함.
-		m_bMove = true;
-
-		//** 마우스 좌표를 받아옴.
-		GetCursorPos(&m_ptMouse);
-		ScreenToClient(g_hWnd, &m_ptMouse);
-
-		//** 마우스 위치에서 플레이어의 위치를 빼 삼각함수의 폭과 높이를 구함.
-		m_Direction.fX = m_ptMouse.x - m_tTransPos.Position.fX;
-		m_Direction.fY = m_ptMouse.y - m_tTransPos.Position.fY;
-
-		m_TargetPoint = Vector3((float)m_ptMouse.x, (float)m_ptMouse.y);
-	}
-
-	//** 마우스 좌클릭 이벤트가 발생하면 폭발하는 이벤트 제작 예정.
-	if (KEY_LBUTTON & dwKey)
-	{
-		//SoundManager::GetInstance()->OnPlaySound("bleeps", SOUND_CHANNEL_ID_EFFECT);
-
-		//** 마우스 좌표를 받아옴.
-		GetCursorPos(&m_ptMouse);
-		ScreenToClient(g_hWnd, &m_ptMouse);
-	}
-	*/
+	
 }
 
 template <typename T>
@@ -346,7 +314,7 @@ Object* Player::CreateBullet()
 
 	((Bullet_Bridge*)Bridge)->SetAngle(m_fAngle);
 
-	Object* pBullet = ObjectFactory<Bullet>::CreateObject(m_tTransPos.Position.fX, m_tTransPos.Position.fY - BULLET_SCALE_Y, Bridge);
+	Object* pBullet = ObjectFactory<Bullet>::CreateObject(m_tTransPos.Position.fX, m_tTransPos.Position.fY, Bridge);
 
 	return pBullet;
 }

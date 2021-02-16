@@ -1,12 +1,4 @@
 #include "Stage.h"
-#include "Monster.h"
-#include "BackGround.h"
-
-#include "Bitmap.h"
-#include "ObjectManager.h"
-#include "BitmapManager.h"
-#include "CollisionManager.h"
-
 
 Stage::Stage()
 {
@@ -45,6 +37,7 @@ int Stage::Progress(void)
 
 	standingObject();
 	
+
 	return 0;
 }
 

@@ -1,5 +1,4 @@
 #include "Bullet.h"
-#include "Bridge.h"
 
 Bullet::Bullet() : m_pBridge(NULL)
 {
@@ -8,7 +7,7 @@ Bullet::Bullet() : m_pBridge(NULL)
 
 Bullet::~Bullet()
 {
-
+	Release();
 }
 
 
@@ -22,28 +21,23 @@ void Bullet::Initialize(void)
 
 int Bullet::Progress(void)
 {
+	m_rc = { (long)(m_tTransPos.Position.fX - (BULLET_SCALE_X / 2)),
+			(long)(m_tTransPos.Position.fY - (BULLET_SCALE_Y / 2)),
+			(long)(m_tTransPos.Position.fX),
+			(long)(m_tTransPos.Position.fY) };
+
+	DebugMode();
+
 	if (m_pBridge)
 		m_pBridge->Progress(m_tTransPos);
-
 
 	return 0;
 }
 
 void Bullet::Render(HDC _hdc)
 {
-	/*
-	TransparentBlt(_hdc,	  // 복사해 넣을 그림판 ?!
-		m_tTransPos.Position.fX,	// 복사할 영역 시작점 X
-		m_tTransPos.Position.fY, 	// 복사할 영역 시작점 Y
-		m_tTransPos.Scale.fX,	// 복사할 영역 끝부분 X
-		m_tTransPos.Scale.fY, 	// 복사할 영역 끝부분 Y
-		(*m_pImageList)["NormalBullet"]->GetMemDC(),	// 복사할 이미지 (복사대상)
-		0,  // 복사할 시작점 X
-		0,	// 복사할 시작점 Y
-		BULLET_SCALE_X, 			// 출력할 이미지의 크기 만큼 X
-		BULLET_SCALE_Y,			// 출력할 이미지의 크기 만큼 Y
-		RGB(255, 0, 255));		// 해당 색상을 제외
-	*/
+	if (isDebugMode)
+		Rectangle(_hdc, m_rc.left, m_rc.top, m_rc.right, m_rc.bottom);
 
 	if (m_pBridge)
 		m_pBridge->Render(_hdc, m_tTransPos);

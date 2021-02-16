@@ -13,12 +13,8 @@ void Ground::Initialize(void)
 int Ground::Progress(void)
 {
 
-	DWORD dwKey = InputManager::GetInstance()->GetKey();
+	DebugMode();
 
-	if (KEY_TAB & dwKey)
-		isDebugMode = true;
-	else
-		isDebugMode = false;
     return 0;
 }
 
