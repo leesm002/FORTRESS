@@ -11,11 +11,9 @@ private:
 	Vector3 m_Direction;
 	Vector3 m_TargetPoint;
 	POINT m_ptMouse;
-	bool m_bMove;
 	bool isLeft;	//왼쪽보고있을때 true 오른쪽보고있을때 false
 	bool isCharging;
 	bool isShoot;
-	bool isExistGround;
 	int iframe;
 
 	//** 점프 
@@ -31,7 +29,7 @@ public:
 
 public:
 	void CheckKey();
-	void SetMoveFalse() { m_bMove = false; }
+	
 public:
 	Player();
 	virtual ~Player();

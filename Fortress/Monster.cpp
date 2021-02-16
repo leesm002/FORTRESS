@@ -52,6 +52,11 @@ void Monster::Initialize(void)
 
 int Monster::Progress(void)
 {
+	m_rc = { (long)m_tTransPos.Position.fX - 20,
+			(long)m_tTransPos.Position.fY - 2,
+			(long)m_tTransPos.Position.fX + 20,
+			(long)m_tTransPos.Position.fY + 2 };
+
 	if (isLeft && !isCharging && !isShoot)
 		iframe = 22;
 	else if (!isLeft && !isCharging && !isShoot)

@@ -21,6 +21,8 @@ public:
 	virtual int Progress(void)override;
 	virtual void Render(HDC _hdc)override;
 	virtual void Release(void)override;
+
+	void standingObject();
 public:
 	Stage();
 	virtual ~Stage();

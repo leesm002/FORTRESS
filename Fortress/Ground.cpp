@@ -2,10 +2,10 @@
 
 void Ground::Initialize(void)
 {
-	m_rc = {(long)m_tTransPos.Position.fX - 50,
-			(long)m_tTransPos.Position.fY - 50,
-			(long)m_tTransPos.Position.fX + 50,
-			(long)m_tTransPos.Position.fY + 50};
+	m_rc = { 0,
+			WINSIZEY - 80,
+			WINSIZEX,
+			WINSIZEY };
 
     m_pImageList->insert(make_pair("Ground", (new Bitmap)->LoadBmp(L"../Resource/Image/Stage/Ground/Ground.bmp")));
 }

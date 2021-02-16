@@ -27,7 +27,6 @@ void Player::Initialize(void)
 	isLeft = true;
 	isShoot = false;
 	isCharging = false;
-	isExistGround = false;
 
 	iframe = 22;
 	chargingCount = 0;
@@ -44,7 +43,6 @@ void Player::Initialize(void)
 	m_fAngle = 0.f;
 	m_fSpeed = 5.f;
 	m_strKey = "Player";
-	m_bMove = false;
 	
 
 	//** 출력 프레임을 제어할 시간.

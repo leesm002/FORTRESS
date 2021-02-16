@@ -5,6 +5,7 @@
 #include "Bitmap.h"
 #include "ObjectManager.h"
 #include "BitmapManager.h"
+#include "CollisionManager.h"
 
 
 Stage::Stage()
@@ -42,6 +43,8 @@ int Stage::Progress(void)
 	pMonster->Progress();
 	pGround->Progress();
 
+	standingObject();
+	
 	return 0;
 }
 
@@ -78,5 +81,41 @@ void Stage::Render(HDC _hdc)
 void Stage::Release(void)
 {
 	ObjectManager::GetInstance()->Release();
+}
+
+void Stage::standingObject()
+{
+	if (!(pPlayer->GetIsExistGround()))
+	{
+		if (CollisionManager::CollRect(pPlayer->GetRC(), pGround->GetRC()))
+		{
+			pPlayer->SetPosition(pPlayer->GetPosition().fX, pPlayer->GetPosition().fY - 5);
+			pPlayer->SetIsExistGround(true);
+		}
+		else
+		{
+			pPlayer->SetPosition(pPlayer->GetPosition().fX, pPlayer->GetPosition().fY + 5);
+		}
+	}
+
+	if (pMonster->GetIsMoved())
+		pMonster->SetIsExistGround(false);
+
+	if (!(pMonster->GetIsExistGround()))
+	{
+		if (CollisionManager::CollRect(pMonster->GetRC(), pGround->GetRC()))
+		{
+			pMonster->SetPosition(pMonster->GetPosition().fX, pMonster->GetPosition().fY - 5);
+			pMonster->SetIsExistGround(true);
+		}
+		else
+		{
+			pMonster->SetPosition(pMonster->GetPosition().fX, pMonster->GetPosition().fY + 5);
+		}
+	}
+
+	if (pMonster->GetIsMoved())
+		pMonster->SetIsExistGround(false);
+
 }
 

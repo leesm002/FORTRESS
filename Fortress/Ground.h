@@ -12,9 +12,6 @@ public:
 	virtual void Release(void)override;
 
 public:
-	void GetPixel(HDC _hdc, int _x, int _y);
-
-public:
 	Ground();
 	virtual ~Ground();
 };
