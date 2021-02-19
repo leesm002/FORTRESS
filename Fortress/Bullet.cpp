@@ -42,9 +42,10 @@ void Bullet::Render(HDC _hdc)
 
 	if (m_pBridge)
 		m_pBridge->Render(_hdc, m_tTransPos);
-
+	/*
 	if (bCheckBoom)
 		Release();
+	*/
 }
 
 void Bullet::Release(void)
